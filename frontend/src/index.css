@@ -5,23 +5,77 @@
 @layer base {
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    background-color: #0a0a0a;
+    color: #f8fafc;
+    overflow-x: hidden;
   }
 }
 
-/* Custom scrollbars */
+/* Custom luxury gold & charcoal scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f1420;
+  background: #0a0a0a;
 }
 ::-webkit-scrollbar-thumb {
-  background: #28334b;
+  background: #27272a;
   border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #e11d48;
+  background: #ca8a04;
+}
+
+/* Luxury Card Glassmorphism */
+.glass-gold {
+  background: rgba(24, 24, 27, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-gold:hover {
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.25);
+}
+
+/* Gold Gradient Button */
+.btn-gold {
+  background: linear-gradient(135deg, #FDE68A 0%, #D4AF37 50%, #997E25 100%);
+  color: #000000;
+  font-weight: 700;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 4px 15px -3px rgba(212, 175, 55, 0.35);
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, #FFF0A6 0%, #E5BE42 50%, #B3922B 100%);
+  box-shadow: 0 6px 25px -2px rgba(234, 179, 8, 0.55);
+  transform: translateY(-1px);
+}
+
+/* Gold Outline Button */
+.btn-gold-outline {
+  background: rgba(24, 24, 27, 0.6);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: #fef08a;
+  font-weight: 600;
+  transition: all 0.25s ease-in-out;
+}
+.btn-gold-outline:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #eab308;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+  transform: translateY(-1px);
+}
+
+/* Gold Shimmer Text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* Print styling for Invoice & Receipt */

@@ -13,11 +13,11 @@ export default function PrintInvoiceModal({ invoice, isOpen, onClose }) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
       <div className="bg-dark-850 border border-slate-700 w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden my-8">
         {/* Modal Controls Header (no-print) */}
-        <div className="no-print p-4 bg-dark-800 border-b border-slate-700 flex items-center justify-between">
+        <div className="no-print p-4 bg-dark-900 border-b border-gold-500/20 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <h3 className="font-bold text-white text-base">Invoice Details: {invoice.invoice_number}</h3>
             <span className={`px-2 py-0.5 rounded text-xs font-semibold uppercase ${
-              invoice.payment_status === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'
+              invoice.payment_status === 'paid' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gold-500/20 text-gold-400 border border-gold-500/30'
             }`}>
               {invoice.payment_status}
             </span>
@@ -25,14 +25,14 @@ export default function PrintInvoiceModal({ invoice, isOpen, onClose }) {
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrint}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold shadow transition"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-black text-xs font-bold shadow-gold-glow transition"
             >
               <Printer className="w-3.5 h-3.5" />
               <span>Print / Download PDF</span>
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-700 transition"
+              className="p-1.5 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition"
             >
               <X className="w-5 h-5" />
             </button>
@@ -43,20 +43,27 @@ export default function PrintInvoiceModal({ invoice, isOpen, onClose }) {
         <div className="p-8 bg-white text-slate-900 printable-area font-sans">
           {/* Gym Header */}
           <div className="flex justify-between items-start border-b-2 border-slate-900 pb-6 mb-6">
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-2xl font-black tracking-tight text-slate-950">RV FITNESS</span>
-                <span className="bg-rose-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">GYM</span>
+            <div className="flex items-start gap-4">
+              <img
+                src="/images/logo.png"
+                alt="RV Fitness"
+                className="w-16 h-16 object-contain rounded-full bg-black p-1 shadow-md"
+              />
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-2xl font-black tracking-tight text-slate-950">RV FITNESS</span>
+                  <span className="bg-amber-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">GYM & FITNESS</span>
+                </div>
+                <p className="text-xs font-bold text-amber-700 uppercase tracking-widest">Narsobawadi Center</p>
+                <p className="text-xs text-slate-500 mt-1 max-w-xs">
+                  Main Bazaar Road, Near Narsimha Mandir, Narsobawadi, Dist. Kolhapur, Maharashtra 416104
+                </p>
+                <p className="text-xs text-slate-500">Ph: +91 98220 12345 | contact@rvfitness.com</p>
               </div>
-              <p className="text-xs font-bold text-slate-600 uppercase tracking-widest">Narsobawadi Center</p>
-              <p className="text-xs text-slate-500 mt-1 max-w-xs">
-                Main Bazaar Road, Near Narsimha Mandir, Narsobawadi, Dist. Kolhapur, Maharashtra 416104
-              </p>
-              <p className="text-xs text-slate-500">Ph: +91 98220 12345 | contact@rvfitness.com</p>
             </div>
             <div className="text-right">
               <h2 className="text-2xl font-black uppercase text-slate-900 tracking-wider">TAX INVOICE</h2>
-              <p className="text-sm font-mono font-bold text-rose-600 mt-1">{invoice.invoice_number}</p>
+              <p className="text-sm font-mono font-bold text-amber-600 mt-1">{invoice.invoice_number}</p>
               <div className="text-xs text-slate-500 mt-2 space-y-0.5">
                 <p><span className="font-semibold text-slate-700">Date:</span> {formatDate(invoice.invoice_date)}</p>
                 <p><span className="font-semibold text-slate-700">Due Date:</span> {formatDate(invoice.due_date)}</p>

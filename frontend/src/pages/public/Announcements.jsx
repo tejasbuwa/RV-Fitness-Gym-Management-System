@@ -1,111 +1,154 @@
 import React, { useState, useEffect } from 'react';
-import { Bell, Calendar, Tag, Info, ArrowUpRight } from 'lucide-react';
+import { Bell, Calendar, MapPin, Clock, Tag, Sparkles } from 'lucide-react';
 import api from '../../services/api';
 import { formatDate } from '../../utils/formatters';
 
 export default function Announcements() {
   const [notices, setNotices] = useState([]);
   const [events, setEvents] = useState([]);
-  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Fallback event images
+  const eventImages = [
+    '/images/gym/event_bootcamp.jpg',
+    '/images/gym/event_powerlifting.jpg',
+    '/images/gym/event_nutrition.jpg'
+  ];
 
   useEffect(() => {
     Promise.all([
       api.get('/notices'),
-      api.get('/events'),
-      api.get('/posts')
+      api.get('/events')
     ])
-      .then(([nRes, eRes, pRes]) => {
-        if (nRes.data.success) setNotices(nRes.data.notices);
-        if (eRes.data.success) setEvents(eRes.data.events);
-        if (pRes.data.success) setPosts(pRes.data.posts);
+      .then(([noticesRes, eventsRes]) => {
+        if (noticesRes.data.success) setNotices(noticesRes.data.notices);
+        if (eventsRes.data.success) setEvents(eventsRes.data.events);
       })
-      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-widest text-brand-500">Community Hub</span>
-        <h1 className="text-4xl font-black text-white">Announcements, Events & Tips</h1>
-        <p className="text-sm text-slate-400">
-          Stay up-to-date with official gym updates, competitions in Narsobawadi, and expert training advice.
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-20 bg-[#0a0a0a] text-zinc-100">
+      {/* Header */}
+      <div className="text-center max-w-3xl mx-auto space-y-4">
+        <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30">
+          Gym Bulletins & Community
+        </span>
+        <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
+          ANNOUNCEMENTS & <span className="text-gold-gradient">UPCOMING EVENTS</span>
+        </h1>
+        <p className="text-base sm:text-lg text-zinc-300 font-normal leading-relaxed">
+          Stay informed with current gym updates, holiday notices, competition announcements, and special fitness workshops at RV Fitness Narsobawadi.
         </p>
       </div>
 
-      {/* 1. Official Notices */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
-          <Bell className="w-5 h-5 text-brand-500" />
-          <h2 className="text-xl font-bold text-white">Official Gym Notices</h2>
+      {/* 1. Official Gym Notices */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-zinc-800">
+          <Bell className="w-5 h-5 text-amber-400" />
+          <h2 className="text-2xl font-bold text-white">Official Bulletins & Notices</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {notices.map((n) => (
-            <div key={n.id} className="p-6 rounded-2xl bg-dark-850 border border-slate-800 space-y-3">
-              <div className="flex justify-between items-start gap-4">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2.5 py-0.5 rounded border border-amber-500/20">
-                  Notice
-                </span>
-                <span className="text-xs text-slate-400">{formatDate(n.publish_date)}</span>
-              </div>
-              <h3 className="text-base font-bold text-white">{n.title}</h3>
-              <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">{n.content}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      {/* 2. Upcoming Events */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
-          <Calendar className="w-5 h-5 text-brand-500" />
-          <h2 className="text-xl font-bold text-white">Upcoming Events & Competitions</h2>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {events.map((e) => (
-            <div key={e.id} className="rounded-2xl bg-dark-850 border border-slate-800 overflow-hidden flex flex-col sm:flex-row">
-              {e.image_url && (
-                <img src={e.image_url} alt={e.event_name} className="w-full sm:w-48 h-48 object-cover shrink-0" />
-              )}
-              <div className="p-6 space-y-2 flex-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                    {e.status}
-                  </span>
-                  <span className="text-xs text-slate-400 font-medium">{formatDate(e.event_date)}</span>
+        {loading ? (
+          <div className="py-10 text-center text-zinc-400">Loading notices...</div>
+        ) : notices.length === 0 ? (
+          <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800 text-center text-zinc-400 text-sm">
+            No active announcements currently posted.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {notices.map((notice) => (
+              <div
+                key={notice.id}
+                className="glass-gold p-6 rounded-3xl border border-amber-500/20 hover:border-amber-500/40 flex flex-col justify-between space-y-4"
+              >
+                <div>
+                  <div className="flex items-center justify-between text-xs mb-3">
+                    <span className="px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 font-semibold uppercase text-[10px]">
+                      Audience: {notice.target_audience}
+                    </span>
+                    <span className="text-zinc-500 font-medium">
+                      {formatDate(notice.publish_date)}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-white mb-2">{notice.title}</h3>
+                  <p className="text-xs text-zinc-300 leading-relaxed whitespace-pre-line">
+                    {notice.content}
+                  </p>
                 </div>
-                <h3 className="text-base font-bold text-white">{e.event_name}</h3>
-                <p className="text-xs text-slate-400 line-clamp-2">{e.description}</p>
-                <div className="pt-2 text-[11px] text-slate-300 space-y-1">
-                  <p><span className="text-slate-500 font-semibold">Time:</span> {e.event_time}</p>
-                  <p><span className="text-slate-500 font-semibold">Venue:</span> {e.location}</p>
+                <div className="pt-3 border-t border-zinc-800/80 text-[11px] text-zinc-500 flex items-center justify-between">
+                  <span>RV Fitness Desk</span>
+                  <span className="text-emerald-400 font-medium">Active Notice</span>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        )}
+      </div>
 
-      {/* 3. Fitness Tips & Updates */}
-      <section className="space-y-6">
-        <div className="flex items-center gap-2 border-b border-slate-800 pb-3">
-          <Tag className="w-5 h-5 text-brand-500" />
-          <h2 className="text-xl font-bold text-white">Fitness Tips & Spotlights</h2>
+      {/* 2. Upcoming Events & Workshops */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-2.5 pb-3 border-b border-zinc-800">
+          <Calendar className="w-5 h-5 text-amber-400" />
+          <h2 className="text-2xl font-bold text-white">Upcoming Events & Competitions</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {posts.map((p) => (
-            <div key={p.id} className="p-6 rounded-2xl bg-dark-850 border border-slate-800 space-y-3">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-2.5 py-0.5 rounded border border-brand-500/20">
-                {p.category}
-              </span>
-              <h3 className="text-base font-bold text-white">{p.title}</h3>
-              <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">{p.content}</p>
-              <p className="text-[11px] text-slate-500">{formatDate(p.publish_date)}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+
+        {loading ? (
+          <div className="py-10 text-center text-zinc-400">Loading events...</div>
+        ) : events.length === 0 ? (
+          <div className="p-8 rounded-2xl bg-zinc-950 border border-zinc-800 text-center text-zinc-400 text-sm">
+            No upcoming events scheduled right now.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {events.map((event, index) => {
+              const coverImg = event.image_url || eventImages[index % eventImages.length];
+              return (
+                <div
+                  key={event.id}
+                  className="glass-gold rounded-3xl overflow-hidden group hover:-translate-y-1.5 transition-all duration-300 border border-amber-500/20"
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={coverImg}
+                      alt={event.event_name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
+                    <span className="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-amber-500/40 text-amber-300 text-xs font-bold uppercase">
+                      {event.status}
+                    </span>
+                  </div>
+
+                  <div className="p-6 space-y-4">
+                    <h3 className="text-xl font-bold text-white group-hover:text-amber-300 transition">
+                      {event.event_name}
+                    </h3>
+                    <p className="text-xs text-zinc-300 leading-relaxed line-clamp-3">
+                      {event.description}
+                    </p>
+
+                    <div className="space-y-2 pt-2 border-t border-zinc-800 text-xs text-zinc-400">
+                      <div className="flex items-center gap-2 text-zinc-300">
+                        <Calendar className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span>Date: {formatDate(event.event_date)}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-zinc-300">
+                        <Clock className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span>Time: {event.event_time}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-zinc-300">
+                        <MapPin className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span>{event.location || 'RV Fitness, Narsobawadi'}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckCircle2, ShieldCheck, Zap } from 'lucide-react';
+import { CheckCircle2, Sparkles, Shield, ArrowRight, Clock, HelpCircle, Star } from 'lucide-react';
 import api from '../../services/api';
 import { formatCurrency } from '../../utils/formatters';
 
@@ -15,80 +15,95 @@ export default function Plans() {
           setPlans(res.data.plans);
         }
       })
-      .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12">
-      <div className="text-center max-w-2xl mx-auto space-y-3">
-        <span className="text-xs font-bold uppercase tracking-widest text-brand-500">Membership Tiers</span>
-        <h1 className="text-4xl font-black text-white">Invest in Your Physical Health</h1>
-        <p className="text-sm text-slate-400">
-          Straightforward pricing with no hidden registration surcharges. All plans grant full equipment access in Narsobawadi.
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 space-y-20 bg-[#0a0a0a] text-zinc-100">
+      {/* Header */}
+      <div className="text-center max-w-3xl mx-auto space-y-4">
+        <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30">
+          Memberships & Subscriptions
+        </span>
+        <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight">
+          CHOOSE YOUR TRANSFORMATION <br />
+          <span className="text-gold-gradient">MEMBERSHIP PLAN</span>
+        </h1>
+        <p className="text-base sm:text-lg text-zinc-300 font-normal leading-relaxed">
+          Transparent, all-inclusive pricing with no hidden registration fees. Every plan includes full gym access in Narsobawadi, customized routines, and digital telemetry tracking.
         </p>
       </div>
 
+      {/* Plan Cards Grid */}
       {loading ? (
-        <div className="text-center py-12 text-slate-400 text-sm">Loading membership plans...</div>
+        <div className="py-20 text-center text-zinc-400">Loading membership packages...</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {plans.map((p) => {
-            const isPopular = p.name.includes('Quarterly') || p.name.includes('Yearly');
-            const benefits = Array.isArray(p.benefits) ? p.benefits : [];
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          {plans.map((plan, index) => {
+            const isFeatured = plan.name.toLowerCase().includes('pro') || plan.name.toLowerCase().includes('yearly');
+            let benefitsList = [];
+            try {
+              benefitsList = typeof plan.benefits === 'string' ? JSON.parse(plan.benefits) : (plan.benefits || []);
+            } catch (e) {
+              benefitsList = ['Full Gym Access', 'General Coaching', 'Locker Room'];
+            }
 
             return (
               <div
-                key={p.id}
-                className={`relative rounded-3xl p-8 flex flex-col justify-between transition ${
-                  isPopular
-                    ? 'bg-dark-850 border-2 border-brand-500 shadow-xl shadow-brand-500/10'
-                    : 'bg-dark-850 border border-slate-800'
+                key={plan.id}
+                className={`relative rounded-3xl p-7 flex flex-col justify-between transition-all duration-300 ${
+                  isFeatured
+                    ? 'bg-gradient-to-b from-zinc-900 via-zinc-950 to-black border-2 border-amber-500 shadow-[0_0_30px_rgba(234,179,8,0.25)] lg:-translate-y-2'
+                    : 'glass-gold bg-zinc-950/70 border border-zinc-800 hover:border-amber-500/40'
                 }`}
               >
-                {isPopular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-brand-500 text-white font-bold text-[10px] uppercase tracking-wider px-3.5 py-1 rounded-full shadow-md">
-                    Most Recommended
+                {isFeatured && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-400 to-yellow-600 text-black font-extrabold text-[10px] uppercase tracking-wider shadow-lg flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-black" />
+                    <span>Recommended</span>
                   </div>
                 )}
 
                 <div>
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-xs font-bold uppercase tracking-wider text-brand-400 bg-brand-500/10 px-3 py-1 rounded-full border border-brand-500/20">
-                      {p.plan_type}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-xs uppercase font-bold tracking-widest text-amber-400">
+                      {plan.plan_type}
                     </span>
-                    <span className="text-xs text-slate-400 font-medium">{p.duration_days} Days Validity</span>
+                    <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300">
+                      {plan.duration_days} Days
+                    </span>
                   </div>
 
-                  <h3 className="text-2xl font-black text-white">{p.name}</h3>
+                  <h3 className="text-2xl font-black text-white mb-2">{plan.name}</h3>
+                  <p className="text-xs text-zinc-400 mb-6 leading-relaxed min-h-[36px]">{plan.description}</p>
 
-                  <div className="my-6">
-                    <span className="text-4xl font-black text-white">{formatCurrency(p.price)}</span>
-                    <span className="text-xs text-slate-400 ml-1">/ term</span>
+                  <div className="mb-6 pb-6 border-b border-zinc-800">
+                    <span className="text-4xl font-black text-white">
+                      {formatCurrency(plan.price)}
+                    </span>
+                    <span className="text-xs text-zinc-500 ml-1.5 font-medium">/ package</span>
                   </div>
 
-                  <p className="text-xs text-slate-400 mb-6 leading-relaxed">{p.description}</p>
-
-                  <div className="space-y-3 mb-8 pt-4 border-t border-slate-800">
-                    <p className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Plan Inclusions:</p>
-                    {benefits.map((b, idx) => (
-                      <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-300">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{b}</span>
+                  <div className="space-y-3 mb-8">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Included Features:</p>
+                    {benefitsList.map((benefit, bIndex) => (
+                      <div key={bIndex} className="flex items-start gap-2.5 text-xs text-zinc-300">
+                        <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                        <span>{benefit}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 <Link
-                  to={`/register?planId=${p.id}`}
-                  className={`w-full text-center py-3.5 px-4 rounded-xl font-bold text-sm transition shadow-lg ${
-                    isPopular
-                      ? 'bg-brand-500 hover:bg-brand-600 text-white shadow-brand-500/20'
-                      : 'bg-dark-750 hover:bg-slate-700 text-white border border-slate-700'
+                  to={`/register?planId=${plan.id}`}
+                  className={`w-full py-3.5 rounded-xl text-center font-bold text-sm transition ${
+                    isFeatured
+                      ? 'btn-gold shadow-lg shadow-amber-500/20'
+                      : 'btn-gold-outline'
                   }`}
                 >
-                  Choose {p.name}
+                  Enroll in {plan.name}
                 </Link>
               </div>
             );
@@ -96,13 +111,37 @@ export default function Plans() {
         </div>
       )}
 
-      {/* Guarantee box */}
-      <div className="p-8 rounded-2xl bg-dark-850 border border-slate-800 text-center max-w-2xl mx-auto space-y-2">
-        <ShieldCheck className="w-8 h-8 text-brand-500 mx-auto" />
-        <h3 className="text-base font-bold text-white">Need a Customized Student or Family Package?</h3>
-        <p className="text-xs text-slate-400">
-          Walk in to our Narsobawadi center or give us a call to discuss custom timings and tailored packages.
-        </p>
+      {/* Plan Privileges Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6">
+        <div className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+            <Sparkles className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-white">No Hidden Joining Charges</h4>
+            <p className="text-xs text-zinc-400 mt-1">What you see is exactly what you pay. Transparent rates with printable receipts provided immediately upon enrollment.</p>
+          </div>
+        </div>
+
+        <div className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+            <Clock className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-white">Full Shift Flexibility</h4>
+            <p className="text-xs text-zinc-400 mt-1">Workout during either morning (05:30 AM – 10:00 AM) or evening (04:30 PM – 10:00 PM) shifts without extra fees.</p>
+          </div>
+        </div>
+
+        <div className="p-6 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-start gap-4">
+          <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+            <Shield className="w-5 h-5" />
+          </div>
+          <div>
+            <h4 className="text-sm font-bold text-white">7-Day Expiry Notifications</h4>
+            <p className="text-xs text-zinc-400 mt-1">Receive automated advance alerts before your subscription expires so you can renew smoothly without missing workouts.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import api from '../../services/api';
 import { useNotification } from '../../context/NotificationContext';
 
 export default function ForgotPassword() {
-  const [step, setStep] = useState(1); // 1: Request token, 2: Reset password
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [token, setToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -19,7 +19,7 @@ export default function ForgotPassword() {
       const res = await api.post('/auth/forgot-password', { email });
       success(res.data.message || 'Reset token generated!');
       if (res.data.resetToken) {
-        setToken(res.data.resetToken); // Pre-fill token for local demo convenience
+        setToken(res.data.resetToken);
       }
       setStep(2);
     } catch (err) {
@@ -44,39 +44,50 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[80vh] flex items-center justify-center px-4 py-14 bg-[#0a0a0a]">
       <div className="w-full max-w-md space-y-6">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 rounded-2xl bg-brand-500/10 border border-brand-500/20 text-brand-500 mx-auto flex items-center justify-center mb-2">
-            <KeyRound className="w-6 h-6" />
-          </div>
-          <h2 className="text-2xl font-black text-white">Reset Account Password</h2>
-          <p className="text-xs text-slate-400">Recover your RV Fitness portal access</p>
+        <div className="text-center space-y-3">
+          <Link to="/" className="inline-flex flex-col items-center group">
+            <div className="relative mb-2">
+              <div className="absolute -inset-2 rounded-full bg-amber-500/20 blur-md group-hover:bg-amber-500/40 transition"></div>
+              <img
+                src="/images/logo.png"
+                alt="RV FITNESS Logo"
+                className="relative h-14 w-auto object-contain drop-shadow-[0_0_12px_rgba(212,175,55,0.4)]"
+              />
+            </div>
+            <h2 className="text-2xl font-black text-white">Reset Account Password</h2>
+            <p className="text-xs text-zinc-400">Recover your RV Fitness portal access</p>
+          </Link>
         </div>
 
-        <div className="p-8 rounded-3xl bg-dark-850 border border-slate-800 shadow-xl">
+        <div className="glass-gold p-8 rounded-3xl border border-amber-500/30 shadow-2xl bg-zinc-950/90">
           {step === 1 && (
             <form onSubmit={handleRequestToken} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Registered Email Address</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                  Account Email Address
+                </label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <Mail className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                   <input
                     type="email"
                     required
+                    placeholder="e.g. member@gmail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="e.g. rohit@gmail.com"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-dark-800 border border-slate-700 text-white text-sm focus:border-brand-500 focus:outline-none"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 outline-none text-sm transition"
                   />
                 </div>
               </div>
+
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl font-bold text-sm bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white shadow-lg transition"
+                className="btn-gold w-full py-3.5 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
               >
-                {loading ? 'Generating Code...' : 'Request Reset Code'}
+                {loading ? 'Generating Security Token...' : 'Generate Reset Token'}
+                <ArrowRight className="w-4 h-4 text-black" />
               </button>
             </form>
           )}
@@ -84,34 +95,40 @@ export default function ForgotPassword() {
           {step === 2 && (
             <form onSubmit={handleResetPassword} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">Reset Verification Token</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                  Security Token
+                </label>
                 <input
                   type="text"
                   required
+                  placeholder="Security token string"
                   value={token}
                   onChange={(e) => setToken(e.target.value)}
-                  placeholder="Paste token or verification code"
-                  className="w-full px-4 py-2.5 rounded-xl bg-dark-800 border border-slate-700 text-white text-sm focus:border-brand-500 focus:outline-none font-mono"
+                  className="w-full px-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 outline-none text-xs font-mono"
                 />
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">New Password</label>
+                <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
+                  New Password
+                </label>
                 <div className="relative">
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <Lock className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                   <input
                     type="password"
                     required
+                    placeholder="Min 6 characters"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="At least 6 characters"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-dark-800 border border-slate-700 text-white text-sm focus:border-brand-500 focus:outline-none"
+                    className="w-full pl-10 pr-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 outline-none text-sm"
                   />
                 </div>
               </div>
+
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl font-bold text-sm bg-brand-500 hover:bg-brand-600 disabled:opacity-50 text-white shadow-lg transition"
+                className="btn-gold w-full py-3.5 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 mt-2 disabled:opacity-50"
               >
                 {loading ? 'Updating Password...' : 'Save New Password'}
               </button>
@@ -120,21 +137,24 @@ export default function ForgotPassword() {
 
           {step === 3 && (
             <div className="text-center space-y-4 py-4">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
-              <h3 className="text-base font-bold text-white">Password Updated!</h3>
-              <p className="text-xs text-slate-400">You may now log in with your updated credentials.</p>
+              <CheckCircle2 className="w-12 h-12 text-amber-400 mx-auto" />
+              <h3 className="text-lg font-bold text-white">Password Updated!</h3>
+              <p className="text-xs text-zinc-400">
+                Your account password has been updated. You can now log into your RV Fitness portal.
+              </p>
               <Link
                 to="/login"
-                className="inline-block py-2.5 px-6 rounded-xl font-bold text-xs bg-brand-500 text-white hover:bg-brand-600 transition"
+                className="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold"
               >
-                Return to Login
+                <span>Proceed to Login</span>
+                <ArrowRight className="w-4 h-4 text-black" />
               </Link>
             </div>
           )}
 
-          <div className="pt-6 mt-6 border-t border-slate-800 text-center text-xs text-slate-400">
-            <Link to="/login" className="text-brand-400 hover:underline">
-              Back to Sign In
+          <div className="mt-6 pt-6 border-t border-zinc-900 text-center text-xs text-zinc-400">
+            <Link to="/login" className="text-amber-400 hover:text-amber-300 font-bold">
+              ← Return to Login
             </Link>
           </div>
         </div>
