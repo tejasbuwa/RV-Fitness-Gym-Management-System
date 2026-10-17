@@ -446,7 +446,11 @@ export default function Home() {
                 <img
                   src={trainer.photo_url || '/images/gym/trainer_vikram.jpg'}
                   alt={trainer.full_name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = '/images/gym/trainer_equipment_barbell.jpg';
+                  }}
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
                 <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">

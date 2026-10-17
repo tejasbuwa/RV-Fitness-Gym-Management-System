@@ -169,6 +169,14 @@ async function updateTrainer(req, res, next) {
       status
     } = req.body;
 
+    const finalFullName = fullName !== undefined ? fullName : req.body.full_name;
+    const finalPhone = phone !== undefined ? phone : req.body.phone;
+    const finalExp = experienceYears !== undefined ? experienceYears : req.body.experience_years;
+    const finalSpec = specialization !== undefined ? specialization : req.body.specialization;
+    const finalBio = bio !== undefined ? bio : req.body.bio;
+    const finalPhoto = photoUrl !== undefined ? photoUrl : req.body.photo_url;
+    const finalStatus = status !== undefined ? status : req.body.status;
+
     const [existing] = await pool.execute(`SELECT * FROM trainers WHERE id = ?`, [trainerId]);
     if (existing.length === 0) {
       return res.status(404).json({ success: false, message: 'Trainer not found.' });
@@ -184,7 +192,16 @@ async function updateTrainer(req, res, next) {
         photo_url = COALESCE(?, photo_url),
         status = COALESCE(?, status)
        WHERE id = ?`,
-      [fullName, phone, experienceYears, specialization, bio, photoUrl, status, trainerId]
+      [
+        finalFullName !== undefined ? finalFullName : null,
+        finalPhone !== undefined ? finalPhone : null,
+        finalExp !== undefined ? parseInt(finalExp, 10) : null,
+        finalSpec !== undefined ? finalSpec : null,
+        finalBio !== undefined ? finalBio : null,
+        finalPhoto !== undefined ? finalPhoto : null,
+        finalStatus !== undefined ? finalStatus : null,
+        trainerId
+      ]
     );
 
     if (status) {

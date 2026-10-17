@@ -11,6 +11,10 @@ export default function Trainers() {
   const trainerPhotos = {
     'Vikram Patil': '/images/gym/trainer_vikram.jpg',
     'Sneha Kulkarni': '/images/gym/trainer_sneha.jpg',
+    'rahul patil rv': '/images/gym/trainer_rahul.jpg',
+    'Rahul Patil': '/images/gym/trainer_rahul.jpg',
+    'diya h': '/images/gym/trainer_diya.jpg',
+    'Diya H': '/images/gym/trainer_diya.jpg',
   };
 
   useEffect(() => {
@@ -45,7 +49,7 @@ export default function Trainers() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {trainers.map((trainer) => {
-            const photoSrc = trainer.photo_url || trainerPhotos[trainer.full_name] || '/images/gym/trainer_vikram.jpg';
+            const photoSrc = trainer.photo_url || trainerPhotos[trainer.full_name] || '/images/gym/trainer_equipment_barbell.jpg';
             return (
               <div
                 key={trainer.id}
@@ -55,7 +59,11 @@ export default function Trainers() {
                   <img
                     src={photoSrc}
                     alt={trainer.full_name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = '/images/gym/trainer_equipment_barbell.jpg';
+                    }}
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 

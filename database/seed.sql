@@ -14,8 +14,8 @@ ON DUPLICATE KEY UPDATE email=VALUES(email);
 
 -- 2. TRAINERS
 INSERT INTO trainers (id, user_id, full_name, phone, email, experience_years, specialization, bio, photo_url, status) VALUES
-(1, 2, 'Vikram Patil', '9822012345', 'vikram@rvfitness.com', 8, 'Strength & Conditioning, Bodybuilding', 'Senior coach with 8+ years experience training competitive lifters.', 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', 'active'),
-(2, 3, 'Sneha Kulkarni', '9822054321', 'sneha@rvfitness.com', 5, 'Weight Loss, CrossFit, Nutrition', 'Certified clinical sports nutritionist and high-intensity trainer.', 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80', 'active')
+(1, 2, 'Vikram Patil', '9822012345', 'vikram@rvfitness.com', 8, 'Strength & Conditioning, Bodybuilding', 'Senior coach with 8+ years experience training competitive lifters.', '/images/gym/trainer_vikram.jpg', 'active'),
+(2, 3, 'Sneha Kulkarni', '9822054321', 'sneha@rvfitness.com', 5, 'Weight Loss, CrossFit, Nutrition', 'Certified clinical sports nutritionist and high-intensity trainer.', '/images/gym/trainer_sneha.jpg', 'active')
 ON DUPLICATE KEY UPDATE full_name=VALUES(full_name);
 
 -- 3. MEMBERS
