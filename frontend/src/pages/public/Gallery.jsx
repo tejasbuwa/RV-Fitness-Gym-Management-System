@@ -7,6 +7,70 @@ export default function Gallery() {
 
   const galleryItems = [
     {
+      id: 101,
+      title: 'Championship Front Double Biceps Pose',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-hero-bodybuilder.jpg',
+      desc: 'Peak muscular definition, shoulder development, and athletic conditioning inside RV Fitness.'
+    },
+    {
+      id: 102,
+      title: 'Championship Trophies & Traditional Silver Gada',
+      category: 'awards',
+      categoryLabel: 'Achievements & Awards',
+      img: '/images/client/rv-gym-trophy-awards.jpg',
+      desc: 'Official championship cups, state-level awards, and the sacred silver gada earned by RV Fitness athletes.'
+    },
+    {
+      id: 103,
+      title: 'RV Fitness Arena - Squat Bicep Pose',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-branding-squat-biceps.jpg',
+      desc: 'Athlete squat bicep pose showing the genuine training floor and official RV FITNESS wall logo in Narsobawadi.'
+    },
+    {
+      id: 104,
+      title: 'RV Fitness Arena - Back Lat & Tricep Definition',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-branding-back-pose.jpg',
+      desc: 'Superior back lat width, shoulder separation, and tricep conditioning against the official RV Fitness wall.'
+    },
+    {
+      id: 105,
+      title: 'Side Chest & Vascularity Peak',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-side-chest-pose.jpg',
+      desc: 'Exceptional side chest mass, striations, and peak bicep vascularity during gym training.'
+    },
+    {
+      id: 106,
+      title: 'Front Biceps & Quad Definition',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-front-biceps-warrior.jpg',
+      desc: 'Dedicated conditioning in front of the motivational mantra: "Be a warrior Not a worrier".'
+    },
+    {
+      id: 107,
+      title: 'Warrior Silhouette & Athletic Focus',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-warrior-pose.jpg',
+      desc: 'Artistic athletic silhouette highlighting focus, poise, and warrior discipline under dramatic studio lighting.'
+    },
+    {
+      id: 108,
+      title: 'Classic Monochrome Physique Aesthetic',
+      category: 'champions',
+      categoryLabel: 'Champions & Athletes',
+      img: '/images/client/rv-gym-physique-monochrome.jpg',
+      desc: 'Artistic black-and-white portrait capturing pure muscular balance, symmetry, and proportions.'
+    },
+    {
       id: 1,
       title: 'Heavy Barbell Deadlift Station',
       category: 'strength',
@@ -85,31 +149,17 @@ export default function Gallery() {
       categoryLabel: 'Facility & Ambience',
       img: '/images/gym/facility_lockers.jpg',
       desc: 'Private secure lockers and hygienic hot/cold shower cubicles.'
-    },
-    {
-      id: 11,
-      title: 'Athletic Conditioning & Battle Ropes',
-      category: 'crossfit',
-      categoryLabel: 'CrossFit & Turf',
-      img: '/images/gym/gallery_transformation_1.jpg',
-      desc: 'Full body functional circuit conditioning in progress.'
-    },
-    {
-      id: 12,
-      title: 'Dedicated Bodybuilding & Hypertrophy Training',
-      category: 'strength',
-      categoryLabel: 'Strength & Weights',
-      img: '/images/gym/gallery_transformation_2.jpg',
-      desc: 'Targeted muscular hypertrophy guided by certified mentors.'
     }
   ];
 
   const categories = [
     { id: 'all', label: 'All Photos' },
+    { id: 'champions', label: 'Champions & Athletes' },
+    { id: 'awards', label: 'Achievements & Awards' },
     { id: 'strength', label: 'Strength & Weights' },
+    { id: 'facility', label: 'Facility & Ambience' },
     { id: 'cardio', label: 'Cardio Matrix' },
-    { id: 'crossfit', label: 'CrossFit & Turf' },
-    { id: 'facility', label: 'Facility & Interiors' }
+    { id: 'crossfit', label: 'CrossFit & Turf' }
   ];
 
   const filteredItems = activeCategory === 'all'
@@ -160,7 +210,7 @@ export default function Gallery() {
               <img
                 src={item.img}
                 alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
               />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-85 group-hover:opacity-95 transition-opacity"></div>

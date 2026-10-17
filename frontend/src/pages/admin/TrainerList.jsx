@@ -19,6 +19,12 @@ import { getStatusBadgeClass } from '../../utils/formatters';
 import { useNotification } from '../../context/NotificationContext';
 
 const PRESET_TRAINER_PHOTOS = [
+  { label: 'Side Chest & Vascularity Peak (RV Fitness)', url: '/images/client/rv-gym-side-chest-pose.jpg' },
+  { label: 'Back Lat & Arena Pose (RV Fitness)', url: '/images/client/rv-gym-branding-back-pose.jpg' },
+  { label: 'Front Biceps & Conditioning (RV Fitness)', url: '/images/client/rv-gym-front-biceps-warrior.jpg' },
+  { label: 'Championship Bodybuilder (RV Fitness)', url: '/images/client/rv-gym-hero-bodybuilder.jpg' },
+  { label: 'Warrior Silhouette & Focus', url: '/images/client/rv-gym-warrior-pose.jpg' },
+  { label: 'Classic Aesthetic Physique', url: '/images/client/rv-gym-physique-monochrome.jpg' },
   { label: 'Strength & Bodybuilding Coach', url: '/images/gym/trainer_vikram.jpg' },
   { label: 'CrossFit & Conditioning Coach', url: '/images/gym/trainer_sneha.jpg' },
   { label: 'Hypertrophy & Dumbbells Coach', url: '/images/gym/trainer_rahul.jpg' },
@@ -70,7 +76,7 @@ export default function TrainerList() {
       return trainer.photo_url;
     }
     const nameLower = (trainer.full_name || '').toLowerCase();
-    if (nameLower.includes('vikram')) return '/images/gym/trainer_vikram.jpg';
+    if (nameLower.includes('vikram')) return '/images/client/rv-gym-side-chest-pose.jpg';
     if (nameLower.includes('sneha')) return '/images/gym/trainer_sneha.jpg';
     if (nameLower.includes('rahul')) return '/images/gym/trainer_rahul.jpg';
     if (nameLower.includes('diya')) return '/images/gym/trainer_diya.jpg';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Dumbbell, Target, HeartHandshake, Award, Sparkles, CheckCircle2, MapPin } from 'lucide-react';
+import { ShieldCheck, Dumbbell, Target, HeartHandshake, Award, Sparkles, CheckCircle2, MapPin, Trophy, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function About() {
@@ -19,15 +19,15 @@ export default function About() {
         </p>
       </div>
 
-      {/* 2. Story & Facility Showcase */}
+      {/* 2. Story & Facility Showcase with Real RV Fitness Arena Image */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="relative group">
           <div className="absolute -inset-1 rounded-3xl bg-amber-500/20 blur-lg group-hover:bg-amber-500/30 transition"></div>
           <div className="relative rounded-3xl overflow-hidden border border-amber-500/40 shadow-2xl bg-zinc-900">
             <img
-              src="/images/gym/about_interior.jpg"
-              alt="RV Fitness Gym Arena Narsobawadi"
-              className="w-full h-[450px] object-cover group-hover:scale-105 transition-transform duration-700"
+              src="/images/client/rv-gym-branding-squat-biceps.jpg"
+              alt="RV Fitness Gym Arena and Official Wall Branding"
+              className="w-full h-[470px] object-cover object-top group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
             <div className="absolute bottom-6 left-6 right-6 p-4 rounded-xl bg-black/85 backdrop-blur-md border border-amber-500/30 text-xs text-zinc-300 flex items-center justify-between">
@@ -35,7 +35,7 @@ export default function About() {
                 <MapPin className="w-4 h-4 text-amber-400" />
                 <span className="font-semibold text-white">Main Bazaar Road, Narsobawadi</span>
               </div>
-              <span className="text-amber-400 font-bold uppercase tracking-wider text-[11px]">Est. 2026</span>
+              <span className="text-amber-400 font-bold uppercase tracking-wider text-[11px]">Official Arena</span>
             </div>
           </div>
         </div>
@@ -116,7 +116,55 @@ export default function About() {
         </div>
       </div>
 
-      {/* 4. Action Banner */}
+      {/* 4. Achievements & Championship Heritage */}
+      <div className="glass-gold p-8 sm:p-12 rounded-3xl border border-amber-500/30 bg-gradient-to-br from-zinc-950 via-[#111111] to-black">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div className="lg:col-span-5 relative group">
+            <div className="relative rounded-2xl overflow-hidden border border-amber-500/40 shadow-2xl">
+              <img
+                src="/images/client/rv-gym-trophy-awards.jpg"
+                alt="RV Fitness Championship Trophies & Traditional Silver Gada"
+                className="w-full h-[400px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+              <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-black/85 backdrop-blur-md border border-amber-500/30 text-xs flex items-center justify-between">
+                <span className="text-amber-400 font-bold">Championship Honors</span>
+                <span className="text-zinc-300">Trophies & Silver Gada</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 space-y-5">
+            <span className="text-xs uppercase font-bold tracking-widest text-amber-400">
+              Championship Heritage
+            </span>
+            <h2 className="text-3xl font-black text-white">
+              TROPHIES FORGED IN <span className="text-gold-gradient">SWEAT & PERSEVERANCE</span>
+            </h2>
+            <p className="text-sm text-zinc-300 leading-relaxed">
+              At RV Fitness Narsobawadi, competitive bodybuilding is more than a sport — it is an art of supreme discipline. Our trophy desk proudly showcases state-level championship cups, medals, and the sacred silver gada representing physical strength and spiritual perseverance.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                <p className="text-amber-400 font-bold text-xs uppercase">Championship Cups</p>
+                <p className="text-xs text-zinc-400 mt-0.5">Top-podium finishes in competitive physique divisions.</p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-zinc-900/90 border border-zinc-800">
+                <p className="text-amber-400 font-bold text-xs uppercase">Sacred Silver Gada</p>
+                <p className="text-xs text-zinc-400 mt-0.5">Traditional mace symbolizing ultimate power and discipline.</p>
+              </div>
+            </div>
+            <div className="pt-2">
+              <Link to="/gallery" className="btn-gold-outline inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold">
+                <span>View All Trophies in Gallery</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Action Banner */}
       <div className="p-10 rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-amber-500/30 text-center space-y-4">
         <h3 className="text-2xl sm:text-3xl font-black text-white">
           Experience the RV Fitness Difference in Person

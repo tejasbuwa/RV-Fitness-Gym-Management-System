@@ -9,7 +9,7 @@ export default function Trainers() {
 
   // Local fallback high-res photos
   const trainerPhotos = {
-    'Vikram Patil': '/images/gym/trainer_vikram.jpg',
+    'Vikram Patil': '/images/client/rv-gym-side-chest-pose.jpg',
     'Sneha Kulkarni': '/images/gym/trainer_sneha.jpg',
     'rahul patil rv': '/images/gym/trainer_rahul.jpg',
     'Rahul Patil': '/images/gym/trainer_rahul.jpg',
@@ -63,7 +63,7 @@ export default function Trainers() {
                       e.target.onerror = null;
                       e.target.src = '/images/gym/trainer_equipment_barbell.jpg';
                     }}
-                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
