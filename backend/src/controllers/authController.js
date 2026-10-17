@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { pool } = require('../config/db');
-const { generateMemberCode } = require('../utils/idGenerator');
+const { generateMemberCode, generateInvoiceNumber } = require('../utils/idGenerator');
 const { logAudit } = require('../utils/auditLogger');
 
 function generateToken(user) {
@@ -13,7 +13,7 @@ function generateToken(user) {
   );
 }
 
-// 1. User Registration (Public Member Registration)
+// 1. User Registration (Public Member Registration with Optional Instant Plan Enrollment)
 async function register(req, res, next) {
   const connection = await pool.getConnection();
   try {
@@ -28,7 +28,8 @@ async function register(req, res, next) {
       emergencyContact,
       heightCm,
       weightKg,
-      fitnessGoal
+      fitnessGoal,
+      planId
     } = req.body;
 
     if (!email || !password || !fullName || !phone) {
@@ -53,7 +54,7 @@ async function register(req, res, next) {
     if (existing.length > 0) {
       return res.status(409).json({
         success: false,
-        message: 'An account with this email address already exists.'
+        message: 'An account with this email address already exists. Please log in.'
       });
     }
 
@@ -72,6 +73,10 @@ async function register(req, res, next) {
     const memberCode = await generateMemberCode();
     const today = new Date().toISOString().split('T')[0];
 
+    const cleanHeight = heightCm && !isNaN(parseFloat(heightCm)) ? parseFloat(heightCm) : null;
+    const cleanWeight = weightKg && !isNaN(parseFloat(weightKg)) ? parseFloat(weightKg) : null;
+    const cleanDob = dob && String(dob).trim() !== '' ? String(dob).trim() : null;
+
     // Insert member record
     const [memberRes] = await connection.execute(
       `INSERT INTO members (
@@ -84,16 +89,94 @@ async function register(req, res, next) {
         fullName.trim(),
         phone.trim(),
         email.toLowerCase().trim(),
-        gender,
-        dob || null,
-        address || null,
-        emergencyContact || null,
+        gender || 'Male',
+        cleanDob,
+        address ? address.trim() : null,
+        emergencyContact ? emergencyContact.trim() : null,
         today,
-        heightCm || null,
-        weightKg || null,
-        fitnessGoal || null
+        cleanHeight,
+        cleanWeight,
+        fitnessGoal ? fitnessGoal.trim() : 'Muscle Hypertrophy & Strength'
       ]
     );
+    const memberId = memberRes.insertId;
+
+    let assignedMembership = null;
+    let generatedInvoice = null;
+
+    // If planId provided, automatically activate membership and create tax invoice
+    if (planId) {
+      const [plans] = await connection.execute(
+        `SELECT * FROM membership_plans WHERE id = ? AND status = 'active'`,
+        [planId]
+      );
+
+      if (plans.length > 0) {
+        const plan = plans[0];
+        const startDate = today;
+        const endDateObj = new Date();
+        endDateObj.setDate(endDateObj.getDate() + (plan.duration_days || 30));
+        const endDate = endDateObj.toISOString().split('T')[0];
+
+        const [msRes] = await connection.execute(
+          `INSERT INTO memberships (member_id, plan_id, start_date, end_date, status, notes)
+           VALUES (?, ?, ?, ?, 'active', ?)`,
+          [memberId, plan.id, startDate, endDate, `Enrolled online via Join Now (${plan.name})`]
+        );
+
+        const invoiceNumber = await generateInvoiceNumber();
+        const dueDateObj = new Date();
+        dueDateObj.setDate(dueDateObj.getDate() + 5);
+        const dueDate = dueDateObj.toISOString().split('T')[0];
+
+        const [invRes] = await connection.execute(
+          `INSERT INTO invoices (
+            invoice_number, member_id, membership_id, invoice_date, due_date,
+            subtotal, discount, tax_amount, final_amount, amount_paid, balance_amount,
+            payment_status, payment_method, notes
+          ) VALUES (?, ?, ?, ?, ?, ?, 0.00, 0.00, ?, 0.00, ?, 'pending', 'Desk / UPI / Cash', ?)`,
+          [
+            invoiceNumber,
+            memberId,
+            msRes.insertId,
+            today,
+            dueDate,
+            plan.price,
+            plan.price,
+            plan.price,
+            `Enrollment invoice for ${plan.name} (${plan.duration_days} days)`
+          ]
+        );
+
+        await connection.execute(
+          `INSERT INTO invoice_items (invoice_id, description, quantity, unit_price, total_price)
+           VALUES (?, ?, 1, ?, ?)`,
+          [
+            invRes.insertId,
+            `${plan.name} Membership Package (${plan.duration_days} Days)`,
+            plan.price,
+            plan.price
+          ]
+        );
+
+        assignedMembership = {
+          id: msRes.insertId,
+          planId: plan.id,
+          planName: plan.name,
+          startDate,
+          endDate,
+          status: 'active'
+        };
+
+        generatedInvoice = {
+          id: invRes.insertId,
+          invoiceNumber,
+          amount: plan.price,
+          dueDate,
+          paymentStatus: 'pending'
+        };
+      }
+    }
 
     await connection.commit();
 
@@ -101,8 +184,8 @@ async function register(req, res, next) {
       userId,
       action: 'MEMBER_REGISTERED',
       entityType: 'members',
-      entityId: memberRes.insertId,
-      details: { memberCode, email },
+      entityId: memberId,
+      details: { memberCode, email, planId: planId || null },
       ipAddress: req.ip
     });
 
@@ -116,10 +199,12 @@ async function register(req, res, next) {
         id: userId,
         email,
         role: 'member',
-        fullName,
+        fullName: fullName.trim(),
         memberCode,
-        memberId: memberRes.insertId
-      }
+        memberId
+      },
+      membership: assignedMembership,
+      invoice: generatedInvoice
     });
   } catch (err) {
     await connection.rollback();

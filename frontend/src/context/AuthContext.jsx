@@ -55,12 +55,12 @@ export function AuthProvider({ children }) {
   const register = async (formData) => {
     const res = await api.post('/auth/register', formData);
     if (res.data.success) {
-      const { token: newToken, user: newUser } = res.data;
+      const { token: newToken, user: newUser, membership, invoice } = res.data;
       setToken(newToken);
       setUser(newUser);
       localStorage.setItem('rv_fitness_token', newToken);
       localStorage.setItem('rv_fitness_user', JSON.stringify(newUser));
-      return { user: newUser, message: res.data.message };
+      return { user: newUser, message: res.data.message, membership, invoice };
     }
     throw new Error(res.data.message || 'Registration failed');
   };
