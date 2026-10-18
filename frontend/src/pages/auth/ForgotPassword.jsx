@@ -16,14 +16,34 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await api.post('/auth/forgot-password', { email });
-      success(res.data.message || 'Reset token generated!');
-      if (res.data.resetToken) {
-        setToken(res.data.resetToken);
+      let res;
+      try {
+        res = await api.post('/auth/forgot-password', { email });
+      } catch (err1) {
+        if (err1.response && err1.response.status === 404) {
+          res = await api.post('/forgot-password', { email });
+        } else {
+          throw err1;
+        }
       }
-      setStep(2);
+
+      if (res && res.data && res.data.success) {
+        success(res.data.message || 'Reset token generated successfully!');
+        if (res.data.resetToken) {
+          setToken(res.data.resetToken);
+        }
+        setStep(2);
+      } else {
+        error(res?.data?.message || 'Failed to request reset token.');
+      }
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to request reset token.');
+      console.error('Password reset request error:', err);
+      const errMsg =
+        err.response?.data?.message ||
+        (err.response?.status === 404
+          ? 'No registered account found with that email, or server is restarting. Please check your email.'
+          : err.message || 'Failed to request reset token.');
+      error(errMsg);
     } finally {
       setLoading(false);
     }
@@ -33,11 +53,31 @@ export default function ForgotPassword() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await api.post('/auth/reset-password', { token, newPassword });
-      success(res.data.message || 'Password reset successfully!');
-      setStep(3);
+      let res;
+      try {
+        res = await api.post('/auth/reset-password', { token, newPassword });
+      } catch (err1) {
+        if (err1.response && err1.response.status === 404) {
+          res = await api.post('/reset-password', { token, newPassword });
+        } else {
+          throw err1;
+        }
+      }
+
+      if (res && res.data && res.data.success) {
+        success(res.data.message || 'Password reset successfully!');
+        setStep(3);
+      } else {
+        error(res?.data?.message || 'Failed to reset password.');
+      }
     } catch (err) {
-      error(err.response?.data?.message || 'Failed to reset password.');
+      console.error('Password reset completion error:', err);
+      const errMsg =
+        err.response?.data?.message ||
+        (err.response?.status === 404
+          ? 'Reset endpoint not found (404). Please ensure server is running.'
+          : err.message || 'Failed to reset password.');
+      error(errMsg);
     } finally {
       setLoading(false);
     }
@@ -66,14 +106,14 @@ export default function ForgotPassword() {
             <form onSubmit={handleRequestToken} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                  Account Email Address
+                  Account Email Address or Member ID
                 </label>
                 <div className="relative">
                   <Mail className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                   <input
-                    type="email"
+                    type="text"
                     required
-                    placeholder="e.g. member@gmail.com"
+                    placeholder="e.g. member@gmail.com or RVF-2026-..."
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 outline-none text-sm transition"
@@ -94,6 +134,33 @@ export default function ForgotPassword() {
 
           {step === 2 && (
             <form onSubmit={handleResetPassword} className="space-y-4">
+              {token && (
+                <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex flex-col gap-1.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold flex items-center gap-1.5">
+                      <KeyRound className="w-4 h-4 text-amber-400" />
+                      Generated Security Token
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigator.clipboard.writeText(token);
+                        success('Token copied to clipboard!');
+                      }}
+                      className="text-[11px] font-bold text-amber-400 hover:text-amber-300 underline"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                  <div className="font-mono text-[11px] bg-black/60 p-2 rounded border border-zinc-800 break-all select-all text-amber-200">
+                    {token}
+                  </div>
+                  <p className="text-[11px] text-zinc-400">
+                    Your token is pre-filled below. Set your new password and click Save.
+                  </p>
+                </div>
+              )}
+
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
                   Security Token
@@ -123,6 +190,16 @@ export default function ForgotPassword() {
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 outline-none text-sm"
                   />
                 </div>
+              </div>
+
+              <div className="flex items-center justify-between pt-1">
+                <button
+                  type="button"
+                  onClick={() => setStep(1)}
+                  className="text-xs text-zinc-400 hover:text-white transition"
+                >
+                  ← Change Email
+                </button>
               </div>
 
               <button

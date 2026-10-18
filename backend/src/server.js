@@ -47,6 +47,7 @@ app.get('/api/health', (req, res) => {
 
 // Mount modular REST APIs
 app.use('/api/auth', authRoutes);
+app.use('/api', authRoutes); // Route aliases (/api/forgot-password, /api/reset-password, etc.)
 app.use('/api/members', memberRoutes);
 app.use('/api/trainers', trainerRoutes);
 app.use('/api/membership-plans', planRoutes);
@@ -69,7 +70,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`====================================================`);
     console.log(`  RV FITNESS – GYM MANAGEMENT SYSTEM (Narsobawadi)`);
     console.log(`  Server running successfully on http://localhost:${PORT}`);

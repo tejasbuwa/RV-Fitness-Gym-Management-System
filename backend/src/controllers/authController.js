@@ -376,20 +376,48 @@ async function getMe(req, res, next) {
 async function forgotPassword(req, res, next) {
   try {
     const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({ success: false, message: 'Please provide an email address.' });
+    if (!email || !String(email).trim()) {
+      return res.status(400).json({ success: false, message: 'Please provide an email address or member ID.' });
     }
 
-    const [users] = await pool.execute(
-      `SELECT id, email FROM users WHERE email = ?`,
-      [email.toLowerCase().trim()]
+    const trimmedInput = String(email).trim();
+
+    // 1. Check by direct email match in users table
+    let [users] = await pool.execute(
+      `SELECT id, email FROM users WHERE LOWER(email) = ?`,
+      [trimmedInput.toLowerCase()]
     );
 
+    // 2. If not found, check by member code or phone number in members table
     if (users.length === 0) {
-      // Return 200 to prevent user enumeration
-      return res.json({
-        success: true,
-        message: 'If the email is registered, password reset instructions have been generated.'
+      const [members] = await pool.execute(
+        `SELECT u.id, u.email FROM users u
+         INNER JOIN members m ON u.id = m.user_id
+         WHERE UPPER(m.member_code) = ? OR m.phone = ?`,
+        [trimmedInput.toUpperCase(), trimmedInput]
+      );
+      if (members.length > 0) {
+        users = members;
+      }
+    }
+
+    // 3. If still not found, check trainers table by phone
+    if (users.length === 0) {
+      const [trainers] = await pool.execute(
+        `SELECT u.id, u.email FROM users u
+         INNER JOIN trainers t ON u.id = t.user_id
+         WHERE t.phone = ?`,
+        [trimmedInput]
+      );
+      if (trainers.length > 0) {
+        users = trainers;
+      }
+    }
+
+    if (users.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: 'No registered account found with that email, phone, or member ID. Please verify your credentials or register.'
       });
     }
 
@@ -406,14 +434,15 @@ async function forgotPassword(req, res, next) {
       action: 'PASSWORD_RESET_REQUESTED',
       entityType: 'users',
       entityId: users[0].id,
-      details: { email },
+      details: { input: trimmedInput, email: users[0].email },
       ipAddress: req.ip
     });
 
     res.json({
       success: true,
       message: 'Password reset code generated successfully.',
-      resetToken // Returned for easy testing and mock email delivery
+      resetToken,
+      email: users[0].email
     });
   } catch (err) {
     next(err);
@@ -439,15 +468,17 @@ async function resetPassword(req, res, next) {
       });
     }
 
+    const cleanToken = String(token).trim();
+
     const [users] = await pool.execute(
       `SELECT id FROM users WHERE reset_token = ? AND reset_token_expiry > NOW()`,
-      [token]
+      [cleanToken]
     );
 
     if (users.length === 0) {
       return res.status(400).json({
         success: false,
-        message: 'Reset token is invalid or has expired.'
+        message: 'Reset token is invalid or has expired. Please request a new one.'
       });
     }
 
