@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: import.meta.env.VITE_API_URL || '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -26,7 +26,7 @@ api.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       // Don't auto-redirect on login or health endpoints
       const url = error.config ? error.config.url : '';
-      if (!url.includes('/auth/login') && !url.includes('/health')) {
+      if (!url.includes('/login') && !url.includes('/health')) {
         localStorage.removeItem('rv_fitness_token');
         localStorage.removeItem('rv_fitness_user');
         if (window.location.pathname !== '/login') {
