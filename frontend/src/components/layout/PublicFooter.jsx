@@ -32,9 +32,9 @@ export default function PublicFooter() {
             </p>
             <div className="flex items-center gap-3">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/rv_fitness5?dlrf=MTkwcXZ4c3M2MmxpMg=="
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.25)] transition"
                 aria-label="Instagram"
               >
