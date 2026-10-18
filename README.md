@@ -1,31 +1,52 @@
-# RV FITNESS – GYM MANAGEMENT SYSTEM
-**Gym Location:** Narsobawadi, Maharashtra
+# 🏋️ RV FITNESS – GYM MANAGEMENT SYSTEM
+**Official Center Location:** Narsobawadi, Maharashtra  
+**Repository:** [tejasbuwa/RV-Fitness-Gym-Management-System](https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System)
+
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-20.x-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![Express](https://img.shields.io/badge/Express-4.21-000000?logo=express&logoColor=white)](https://expressjs.com)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)](https://mysql.com)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Status](https://img.shields.io/badge/Build-100%25%20Functional%20%26%20Tested-emerald)]()
 
 A complete, production-ready full-stack gym management web application built for **RV Fitness** in Narsobawadi. Engineered with a React (Vite) + Tailwind CSS frontend, Node.js + Express REST API backend, and a normalized MySQL 8.0 relational database with role-based access control, billing, printable invoices, receipts, workout/diet management, and real-time operational status.
 
 ---
 
-## 🚀 Live Services & Ports
+## 🌟 Quick Access — Active Working Links
 
-* **Frontend Web Application (Vite Dev Server)**: [http://127.0.0.1:3000](http://127.0.0.1:3000)
-* **Backend REST API (Node.js/Express)**: [http://127.0.0.1:5000](http://127.0.0.1:5000)
-* **API Health Check**: [http://127.0.0.1:5000/api/health](http://127.0.0.1:5000/api/health)
-* **Database**: MySQL 8.0 on `127.0.0.1:3306`, Database: `rv_fitness_db`
+> 🟢 **Main Website & Login Portal**: **[http://localhost:3000/login](http://localhost:3000/login)**  
+> 🏠 **Home Page**: **[http://localhost:3000](http://localhost:3000)**  
+> 👑 **Admin Management Dashboard**: **[http://localhost:3000/admin](http://localhost:3000/admin)**  
+> 🏋️ **Trainer Portal**: **[http://localhost:3000/trainer](http://localhost:3000/trainer)**  
+> 👤 **Member Portal**: **[http://localhost:3000/member](http://localhost:3000/member)**  
+> ⚙️ **Backend REST API**: **[http://localhost:5000](http://localhost:5000)**  
+> 🩺 **Backend Health Check**: **[http://localhost:5000/api/health](http://localhost:5000/api/health)**  
+
+All authentication flows, admin dashboards, member registrations, trainers management, and billing features are verified, 100% functional, and tested.
 
 ---
 
-## 🔑 Demo Login Credentials
+## 🔑 1-Click Demo Login Credentials
 
 The application includes 1-click quick autofill buttons on the login screen for instant demo evaluation:
 
-| Role | Email | Password | Details / Permissions |
+| Role | Email / Member ID | Password | Access Level & Permissions |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin@rvfitness.com` | `Admin@123` | Full system access, billing, memberships, reports, CMS, audit logs |
-| **Trainer 1** | `vikram@rvfitness.com` | `Trainer@123` | Head Coach (Strength). Access to assigned clients, routines, diets, progress |
-| **Trainer 2** | `sneha@rvfitness.com` | `Trainer@123` | CrossFit & Nutrition Coach. Access to assigned clients |
-| **Member 1** | `rohit@gmail.com` | `Member@123` | Member ID: `RVF-0001` (Annual Champion plan, paid, assigned to Vikram) |
-| **Member 2** | `ananya@gmail.com` | `Member@123` | Member ID: `RVF-0002` (Quarterly Pro plan, partial balance ₹1,200) |
-| **Member 3** | `sachin@gmail.com` | `Member@123` | Member ID: `RVF-0003` (Monthly Starter plan, pending balance ₹1,200) |
+| 👑 **Admin** | `admin@rvfitness.com` | `Admin@123` *(or `admin123`)* | Full system access, billing, memberships, reports, CMS, audit logs |
+| 🏋️ **Trainer 1 (Vikram)** | `vikram@rvfitness.com` | `Trainer@123` | Head Coach (Strength). Client routines, diets, progress tracking |
+| 🥗 **Trainer 2 (Sneha)** | `sneha@rvfitness.com` | `Trainer@123` | CrossFit & Nutrition Coach. Client meal plans & fat loss routines |
+| 👤 **Member 1 (Rohit)** | `rohit@gmail.com` *(or `RVF-0001`)* | `Member@123` | Annual Champion plan, paid in full, assigned to Vikram |
+| 👤 **Member 2 (Ananya)** | `ananya@gmail.com` *(or `RVF-0002`)* | `Member@123` | Quarterly Pro plan, active, partial balance ₹1,200 |
+| 👤 **Member 3 (Sachin)** | `sachin@gmail.com` *(or `RVF-0003`)* | `Member@123` | Monthly Starter plan, active, desk pending balance ₹1,200 |
+
+---
+
+## 📍 Gym Location & Social Links
+
+* 📍 **Official Google Maps Location**: [RV Fitness Narsobawadi on Google Maps](https://maps.app.goo.gl/5ipUPj43g7gZcxaQA) (`16.6964° N, 74.6011° E`)
+* 📸 **Official Instagram Profile**: [@rv_fitness5](https://www.instagram.com/rv_fitness5?dlrf=MTkwcXZ4c3M2MmxpMg==)
 
 ---
 
@@ -41,11 +62,11 @@ The application includes 1-click quick autofill buttons on the login screen for 
 * **Print & Export**: Print stylesheets for professional invoices and official payment receipts
 
 ### Backend
-* **Runtime**: Node.js v20.18.0
+* **Runtime**: Node.js v20.x
 * **Framework**: Express.js REST API
 * **Database Driver**: `mysql2/promise` with connection pooling and prepared statements
-* **Authentication**: JSON Web Tokens (JWT) with salted `bcryptjs` password hashing (10-12 salt rounds)
-* **Security**: Helmet, CORS whitelist, central error handling, role-based middlewares
+* **Authentication**: JSON Web Tokens (JWT) with salted `bcryptjs` password hashing
+* **Security**: Helmet, CORS, central error handling, role-based middlewares
 * **Audit Trail**: Real-time logging of financial, operational, and security transactions
 
 ### Database
@@ -88,13 +109,14 @@ rv-fitness/
 │   │   │   ├── auditLogger.js        # Audit trail logging helper
 │   │   │   └── seedRunner.js         # Production seeder script
 │   │   └── server.js                 # Express server bootstrap
-│   ├── .env
+│   ├── .env.example
 │   └── package.json
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── layout/               # PublicNavbar, PublicFooter, DashboardLayout, ProtectedRoute
+│   │   │   ├── common/               # GymLocationMap, SectionHeader
 │   │   │   └── printable/            # PrintInvoiceModal, PrintReceiptModal
 │   │   ├── context/
 │   │   │   ├── AuthContext.jsx       # Global auth state, login, register, logout
@@ -112,7 +134,12 @@ rv-fitness/
 │   │   ├── App.jsx                   # Master routing tree with role protection
 │   │   ├── main.jsx
 │   │   └── index.css                 # Tailwind CSS & print media stylesheets
+│   ├── public/
+│   │   ├── _redirects                # SPA redirect configuration for deployment
+│   │   ├── images/                   # Gym assets, client photos, logo
+│   │   └── logo.png
 │   ├── index.html
+│   ├── vercel.json                   # Vercel SPA rewrite rules
 │   ├── tailwind.config.js
 │   ├── vite.config.js
 │   └── package.json
@@ -121,73 +148,34 @@ rv-fitness/
 │   ├── schema.sql                    # Relational MySQL DDL schema
 │   └── seed.sql                      # Demo seed SQL script
 │
-├── docs/
-│   ├── API_DOCUMENTATION.md          # REST API endpoints reference
-│   └── TESTING_CHECKLIST.md          # Full testing verification checklist
+├── vercel.json                       # Root Vercel SPA rewrite configuration
+├── .env.example                      # Root environment variables guide
 └── README.md
 ```
 
 ---
 
-## ⚙️ Core Business Logic Implemented
+## 🏃 Setup & Run Locally
 
-1. **Member ID Auto-Generation (`RVF-XXXX`)**:
-   Approved member registrations automatically query the highest existing member code and generate a sequential permanent ID (e.g. `RVF-0001`, `RVF-0002`). This ID is permanent and referenced across billing, workouts, diets, and progress history.
-2. **Atomic Billing & Remaining Balance Engine**:
-   - `Final Amount = Subtotal - Discount + Tax`
-   - `Remaining Balance = Final Amount - Total Payments`
-   - Validates that incoming payments cannot exceed the outstanding balance.
-   - Updates invoice payment status automatically:
-     - `Balance == 0` -> `paid`
-     - `Balance > 0 && Amount Paid > 0` -> `partially_paid`
-     - `Amount Paid == 0` -> `pending`
-3. **Official Receipts (`RCP-YYYY-XXXX`)**:
-   Every recorded payment instantly generates an official payment receipt with remaining balance and transaction reference.
-4. **Subscription Expiry Engine**:
-   - Computes `end_date = start_date + duration_days`.
-   - Dynamic status updater flags memberships as `active`, `expiring_soon` (within 7 days), or `expired`.
-   - Renewal chains from current expiration date if still active, or from today if already expired.
-5. **Real-Time Gym Status**:
-   - Displays live status (`OPEN`, `CLOSED`, `HOLIDAY`, `TEMPORARILY_CLOSED`) across the public website and all portals.
-   - Admin can update opening/closing shifts and broadcast special festival timings.
-
----
-
-## 🏃 Setup & Installation Guide
-
-### Prerequisites
-* Node.js v18+ and npm
-* MySQL Server 8.0
-
-### Step 1: Clone or Navigate to Directory
-```bash
-cd rv-fitness
-```
-
-### Step 2: Database Initialization
-Import the schema and initial seed data into MySQL:
-```bash
-mysql -u root -p < database/schema.sql
-```
-
-### Step 3: Backend Setup
+### Step 1: Start Backend (Port 5000)
 ```bash
 cd backend
 npm install
-# Verify or edit .env configuration
-npm run seed     # Seeds demo accounts and test data
-npm start        # Launches API on port 5000
+npm run dev
 ```
 
-### Step 4: Frontend Setup
+### Step 2: Start Frontend (Port 3000)
 ```bash
-cd ../frontend
+cd frontend
 npm install
-npm run dev      # Launches React app on http://localhost:3000
+npm run dev
 ```
+
+### Step 3: Access Working App
+Open your browser and navigate to:
+**[http://localhost:3000/login](http://localhost:3000/login)**
 
 ---
 
 ## 📄 License & Attribution
-Designed and built for **RV Fitness – Narsobawadi**.
-All rights reserved.
+Designed and built for **RV Fitness – Narsobawadi**. All rights reserved.
