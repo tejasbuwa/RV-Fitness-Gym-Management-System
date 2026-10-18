@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import api from '../../services/api';
 import { formatCurrency } from '../../utils/formatters';
+import GymLocationMap from '../../components/common/GymLocationMap';
 
 export default function Home() {
   const [plans, setPlans] = useState([]);
@@ -719,7 +720,25 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 7. CALL TO ACTION BANNER WITH LOCAL HIGH-RES GYM BACKGROUND */}
+      {/* 7. VISIT OUR GYM / GOOGLE MAPS LOCATION SECTION */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
+          <span className="text-amber-400 font-bold text-xs uppercase tracking-[0.25em] px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 inline-flex items-center gap-2">
+            <MapPin className="w-3.5 h-3.5" />
+            <span>Visit Our Gym</span>
+          </span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight">
+            FIND YOUR <span className="text-gold-gradient">FITNESS DESTINATION</span>
+          </h2>
+          <p className="text-zinc-400 text-sm sm:text-base leading-relaxed">
+            Centrally situated in Narsobawadi with direct road access, spacious parking, and morning & evening training shifts. Explore our interactive location below.
+          </p>
+        </div>
+
+        <GymLocationMap variant="full" />
+      </section>
+
+      {/* 8. CALL TO ACTION BANNER WITH LOCAL HIGH-RES GYM BACKGROUND */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl overflow-hidden border border-amber-500/30 p-10 sm:p-16 text-center space-y-6">
           <img

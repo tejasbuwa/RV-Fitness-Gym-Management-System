@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle2, Sparkles, Navigation, ExternalLink } from 'lucide-react';
 import { useNotification } from '../../context/NotificationContext';
+import GymLocationMap from '../../components/common/GymLocationMap';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
@@ -186,6 +187,24 @@ export default function Contact() {
             </form>
           )}
         </div>
+      </div>
+
+      {/* Interactive Google Map Section with Directions */}
+      <div className="space-y-6 pt-6 border-t border-zinc-800/80">
+        <div>
+          <span className="text-xs font-bold uppercase tracking-[0.25em] text-amber-400 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 inline-flex items-center gap-2">
+            <MapPin className="w-3.5 h-3.5" />
+            <span>Interactive Gym Map</span>
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight mt-3">
+            VISIT OUR GYM IN <span className="text-gold-gradient">NARSOBAWADI</span>
+          </h2>
+          <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-2xl leading-relaxed">
+            Get turn-by-turn navigation or explore our gym premises on Google Maps. We are located near Narsimha Mandir Chowk with easy road approach and parking.
+          </p>
+        </div>
+
+        <GymLocationMap variant="full" />
       </div>
     </div>
   );

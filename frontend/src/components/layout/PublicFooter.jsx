@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Youtube, ShieldCheck, Dumbbell, Award } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Youtube, ShieldCheck, Dumbbell, Award, Navigation, ExternalLink } from 'lucide-react';
 
 export default function PublicFooter() {
   return (
@@ -148,6 +148,31 @@ export default function PublicFooter() {
                   Main Bazaar Road, Near Narsimha Mandir Chowk, Narsobawadi, Maharashtra – 416104
                 </p>
               </div>
+
+              {/* Google Maps Actions */}
+              <div className="flex flex-col gap-2 pt-0.5">
+                <a
+                  href="https://maps.app.goo.gl/5ipUPj43g7gZcxaQA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-400 hover:text-amber-300 transition group"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-amber-400 group-hover:scale-110 transition-transform" />
+                  <span>View Location on Google Maps</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=16.6964166,74.6011262"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-300 hover:bg-amber-500 hover:text-black font-semibold text-xs transition w-fit"
+                >
+                  <Navigation className="w-3 h-3 fill-current" />
+                  <span>Get Driving Directions</span>
+                </a>
+              </div>
+
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-amber-400 shrink-0" />
                 <a href="tel:+919822012345" className="text-zinc-300 hover:text-amber-400 transition font-medium">
