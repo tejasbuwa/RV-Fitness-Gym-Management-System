@@ -113,14 +113,14 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5">
-                Email Address
+                Email Address, Phone, or Member ID
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 text-zinc-500 absolute left-3.5 top-3.5" />
                 <input
-                  type="email"
+                  type="text"
                   required
-                  placeholder="e.g. admin@rvfitness.com"
+                  placeholder="e.g. admin@rvfitness.com or RVF-0001"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-black border border-zinc-800 text-white placeholder-zinc-600 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 outline-none text-sm transition"

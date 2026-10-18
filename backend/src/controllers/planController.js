@@ -20,10 +20,19 @@ async function getPlans(req, res, next) {
     const [plans] = await pool.execute(sql, params);
 
     // Parse JSON benefits if needed
-    const parsedPlans = plans.map((p) => ({
-      ...p,
-      benefits: typeof p.benefits === 'string' ? JSON.parse(p.benefits || '[]') : (p.benefits || [])
-    }));
+    const parsedPlans = plans.map((p) => {
+      let benefits = [];
+      if (typeof p.benefits === 'string') {
+        try {
+          benefits = JSON.parse(p.benefits || '[]');
+        } catch (e) {
+          benefits = p.benefits ? [p.benefits] : [];
+        }
+      } else if (Array.isArray(p.benefits)) {
+        benefits = p.benefits;
+      }
+      return { ...p, benefits };
+    });
 
     res.json({
       success: true,

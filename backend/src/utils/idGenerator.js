@@ -1,7 +1,7 @@
 const { pool } = require('../config/db');
 
-async function generateMemberCode() {
-  const [rows] = await pool.execute(
+async function generateMemberCode(db = pool) {
+  const [rows] = await db.execute(
     `SELECT member_code FROM members ORDER BY id DESC LIMIT 1`
   );
   if (rows.length === 0) {
@@ -16,9 +16,9 @@ async function generateMemberCode() {
   return `RVF-${Date.now().toString().slice(-4)}`;
 }
 
-async function generateInvoiceNumber() {
+async function generateInvoiceNumber(db = pool) {
   const year = new Date().getFullYear();
-  const [rows] = await pool.execute(
+  const [rows] = await db.execute(
     `SELECT invoice_number FROM invoices WHERE invoice_number LIKE ? ORDER BY id DESC LIMIT 1`,
     [`INV-${year}-%`]
   );

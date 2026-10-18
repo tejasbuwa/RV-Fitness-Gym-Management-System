@@ -40,7 +40,16 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password });
+    let res;
+    try {
+      res = await api.post('/auth/login', { email, password });
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        res = await api.post('/login', { email, password });
+      } else {
+        throw err;
+      }
+    }
     if (res.data.success) {
       const { token: newToken, user: newUser } = res.data;
       setToken(newToken);
@@ -53,7 +62,16 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (formData) => {
-    const res = await api.post('/auth/register', formData);
+    let res;
+    try {
+      res = await api.post('/auth/register', formData);
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        res = await api.post('/register', formData);
+      } else {
+        throw err;
+      }
+    }
     if (res.data.success) {
       const { token: newToken, user: newUser, membership, invoice } = res.data;
       setToken(newToken);

@@ -51,6 +51,7 @@ app.use('/api', authRoutes); // Route aliases (/api/forgot-password, /api/reset-
 app.use('/api/members', memberRoutes);
 app.use('/api/trainers', trainerRoutes);
 app.use('/api/membership-plans', planRoutes);
+app.use('/api/plans', planRoutes); // Route alias
 app.use('/api/memberships', membershipRoutes);
 app.use('/api/invoices', billingRoutes);
 app.use('/api', paymentRoutes); // /api/payments, /api/receipts
