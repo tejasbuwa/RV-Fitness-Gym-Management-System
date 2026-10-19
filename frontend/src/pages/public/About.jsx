@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, Dumbbell, Target, HeartHandshake, Award, Sparkles, CheckCircle2, MapPin, Trophy, ArrowRight } from 'lucide-react';
+import { ShieldCheck, Dumbbell, Target, HeartHandshake, Award, Sparkles, CheckCircle2, MapPin, Trophy, ArrowRight, Github, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function About() {
@@ -164,7 +164,42 @@ export default function About() {
         </div>
       </div>
 
-      {/* 5. Action Banner */}
+      {/* 5. Open Source Engineering & GitHub Credits */}
+      <div className="p-8 rounded-3xl glass-gold border border-amber-500/30 bg-zinc-950/80 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="flex items-center gap-4">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0">
+            <Github className="w-7 h-7" />
+          </div>
+          <div>
+            <h4 className="text-lg font-black text-white">Open Source Engineering & GitHub Repository</h4>
+            <p className="text-xs text-zinc-400 mt-1">
+              Engineered by <strong className="text-amber-400">Tejas Buwa</strong> with modern React, Vite, Node.js, and MySQL. Explore the source code, architecture, and live deployment.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          <a
+            href="https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-gold-glow"
+          >
+            <Github className="w-4 h-4 text-black" />
+            <span>View Repository</span>
+            <ExternalLink className="w-3.5 h-3.5 text-black" />
+          </a>
+          <a
+            href="https://github.com/tejasbuwa"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-gold-outline px-4 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2"
+          >
+            <span>Developer Profile</span>
+          </a>
+        </div>
+      </div>
+
+      {/* 6. Action Banner */}
       <div className="p-10 rounded-3xl bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 border border-amber-500/30 text-center space-y-4">
         <h3 className="text-2xl sm:text-3xl font-black text-white">
           Experience the RV Fitness Difference in Person

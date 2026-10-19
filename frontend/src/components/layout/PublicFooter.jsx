@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Youtube, ShieldCheck, Dumbbell, Award, Navigation, ExternalLink } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, Instagram, Facebook, Youtube, ShieldCheck, Dumbbell, Award, Navigation, ExternalLink, Github } from 'lucide-react';
 
 export default function PublicFooter() {
   return (
@@ -39,6 +39,16 @@ export default function PublicFooter() {
                 aria-label="Instagram"
               >
                 <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 hover:text-amber-400 hover:border-amber-500/50 hover:shadow-[0_0_15px_rgba(212,175,55,0.25)] transition"
+                aria-label="GitHub Repository"
+                title="GitHub Repository"
+              >
+                <Github className="w-4 h-4" />
               </a>
               <a
                 href="https://facebook.com"
@@ -199,14 +209,35 @@ export default function PublicFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+        <div className="pt-8 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
           <p>© {new Date().getFullYear()} RV FITNESS – Narsobawadi. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <span className="text-amber-500/80 font-semibold tracking-wider uppercase text-[10px]">
-              Built for Champions
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2">
+            <span className="text-zinc-400">
+              Designed & Developed by{' '}
+              <a
+                href="https://github.com/tejasbuwa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-amber-400 hover:text-amber-300 font-bold transition inline-flex items-center gap-1"
+              >
+                <Github className="w-3.5 h-3.5" />
+                Tejas Buwa
+              </a>
             </span>
-            <span>•</span>
-            <Link to="/login" className="hover:text-amber-400 transition">Staff & Member Portal</Link>
+            <span className="hidden sm:inline text-zinc-700">•</span>
+            <a
+              href="https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-amber-300 transition inline-flex items-center gap-1 font-medium"
+            >
+              <span>GitHub Repository</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+            <span className="hidden sm:inline text-zinc-700">•</span>
+            <Link to="/login" className="text-amber-400/90 hover:text-amber-300 font-semibold transition">
+              Staff & Member Portal
+            </Link>
           </div>
         </div>
       </div>

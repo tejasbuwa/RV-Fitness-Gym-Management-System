@@ -14,15 +14,16 @@ A complete, production-ready full-stack gym management web application built for
 
 ---
 
-## 🌟 Quick Access — Active Working Links
+## 🌐 Live Production Deployment & Project Links
 
-> 🟢 **Main Website & Login Portal**: **[http://localhost:3000/login](http://localhost:3000/login)**  
-> 🏠 **Home Page**: **[http://localhost:3000](http://localhost:3000)**  
-> 👑 **Admin Management Dashboard**: **[http://localhost:3000/admin](http://localhost:3000/admin)**  
-> 🏋️ **Trainer Portal**: **[http://localhost:3000/trainer](http://localhost:3000/trainer)**  
-> 👤 **Member Portal**: **[http://localhost:3000/member](http://localhost:3000/member)**  
-> ⚙️ **Backend REST API**: **[http://localhost:5000](http://localhost:5000)**  
-> 🩺 **Backend Health Check**: **[http://localhost:5000/api/health](http://localhost:5000/api/health)**  
+| Resource | Official Public Link | Description |
+| :--- | :--- | :--- |
+| 🚀 **Live Production Website** | [https://rv-fitness-gym-management-system.vercel.app](https://rv-fitness-gym-management-system.vercel.app) | Public website hosted on Vercel |
+| 🔐 **Live Login & Portal Access** | [https://rv-fitness-gym-management-system.vercel.app/login](https://rv-fitness-gym-management-system.vercel.app/login) | Member, trainer, and admin sign-in |
+| 👑 **Live Admin Dashboard** | [https://rv-fitness-gym-management-system.vercel.app/admin](https://rv-fitness-gym-management-system.vercel.app/admin) | Management console (protected route) |
+| 📁 **GitHub Repository** | [https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System](https://github.com/tejasbuwa/RV-Fitness-Gym-Management-System) | Open-source codebase |
+| 👤 **GitHub Developer Profile** | [https://github.com/tejasbuwa](https://github.com/tejasbuwa) | Developer portfolio |
+| ⚡ **Vercel Project Dashboard** | [https://vercel.com/dashboard](https://vercel.com/dashboard) | Vercel deployment status & analytics |
 
 All authentication flows, admin dashboards, member registrations, trainers management, and billing features are verified, 100% functional, and tested.
 
