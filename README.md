@@ -80,6 +80,37 @@ The application includes 1-click quick autofill buttons on the login screen for 
 
 ---
 
+## 📸 Screenshots & System Architecture
+
+| Diagram / Workflow | Description |
+| :--- | :--- |
+| **System Architecture** | Full-stack deployment model: React Vite Frontend, Node/Express API, MySQL 8.0, and Vercel hosting |
+| **Database ER Model** | 19 normalized tables detailing member lifecycle, trainers, workouts, diet, invoices, and payments |
+| **RBAC & Authentication Flow** | Multi-role JWT authorization with automatic session handling and demo fallbacks |
+| **Financial & Billing Pipeline** | Atomic invoice generation, partial payments, automated receipts, and balance calculations |
+| **Member Onboarding Lifecycle** | Member registration, plan selection, trainer allocation, and subscription renewal flow |
+
+<div align="center">
+
+### 🏛️ System Architecture
+<img src="docs/images/arch_diagram.png" alt="RV Fitness System Architecture" width="850"/>
+
+### 🗄️ Relational Database ER Diagram (19 Tables)
+<img src="docs/images/er_diagram.png" alt="RV Fitness Database ER Diagram" width="850"/>
+
+### 🔐 Authentication & Role-Based Access Control Flow
+<img src="docs/images/auth_flow.png" alt="RV Fitness Auth Flow" width="850"/>
+
+### 💳 Billing, Invoice & Payment Lifecycle
+<img src="docs/images/billing_flow.png" alt="RV Fitness Billing Flow" width="850"/>
+
+### 🔄 Member Onboarding & Subscription Lifecycle
+<img src="docs/images/member_lifecycle.png" alt="RV Fitness Member Lifecycle" width="850"/>
+
+</div>
+
+---
+
 ## 📍 Gym Location & Social Links
 
 * 📍 **Official Google Maps Location**: [RV Fitness Narsobawadi on Google Maps](https://maps.app.goo.gl/5ipUPj43g7gZcxaQA) (`16.6964° N, 74.6011° E`)
