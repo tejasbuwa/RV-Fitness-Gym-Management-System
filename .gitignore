@@ -2,10 +2,10 @@
 node_modules/
 */node_modules/
 
-# Environment variables
+# Environment variables & secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 *.env
 
 # Production build outputs
@@ -21,6 +21,9 @@ yarn-debug.log*
 yarn-error.log*
 backend/stdout.log
 backend/stderr.log
+
+# Vercel & Deployments
+.vercel/
 
 # IDE & OS
 .vscode/
